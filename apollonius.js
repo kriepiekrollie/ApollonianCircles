@@ -149,7 +149,8 @@ document.onmousemove = function(event) {
                     cnt++;
                 }
             }
-            if (cnt>1) continue;
+            if (cnt>1) 
+                continue;
             circles[j].x = X;
             circles[j].y = Y;   
         }
@@ -159,13 +160,11 @@ document.onmousemove = function(event) {
             X = event.pageX;
             Y = event.pageY;
             R = Math.sqrt(sq(circles[j].x-X) + sq(circles[j].y-Y))
-            intersects = false;
             for (i = 0; i < 3; i++) {
                 if (i == j) continue;
-                if (sq(circles[j].x - circles[i].x) + sq(circles[j].y - circles[i].y) <= sq(circles[i].r + R)){
-                    intersects = true;
-                    break;
-                }
+                dist = Math.sqrt(sq(circles[j].x - circles[i].x) + sq(circles[j].y - circles[i].y));
+                if (dist <= circles[i].r + R) 
+                    R = dist - circles[i].r - 0.001;
             }
             if (!intersects)
                 circles[j].r = R;
