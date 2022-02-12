@@ -65,9 +65,10 @@ function draw_circle(circle,width,color){
     ctx.stroke();
 }
 
-cl = ['#ff0000','#ffff00','#00ff00','#00ffff','#0000ff','#ff00ff','#ffffff','#f0f0f0f'];
 circles = [{x:300,y:300,r:200}, {x:800,y:300,r:100}, {x:500,y:500,r:60}];
 clicked = [false, false, false];
+dx = 0;
+dy = 0;
 
 function render(){
     clear();
@@ -91,15 +92,18 @@ document.onmousedown = function(event) {
     X = event.pageX;
     Y = event.pageY;
     for (i = 0; i < 3; i++)
-        if (sq(circles[i].x-X) + sq(circles[i].y-Y) <= sq(circles[i].r))
+        if (sq(circles[i].x-X) + sq(circles[i].y-Y) <= sq(circles[i].r)){
             clicked[i] = true;
+            dx = X - circles[i].x;
+            dy = Y - circles[i].y;
+        }
 }
 
 document.onmousemove = function(event) {
     for (j = 0; j < 3; j++) {
         if (clicked[j]){
-            X = event.pageX;
-            Y = event.pageY;
+            X = event.pageX - dx;
+            Y = event.pageY - dy;
             // Incredibly bad way to make sure circles don't overlap, yay
             cnt = 0;
             for (i = 0; i < 3; i++) {
