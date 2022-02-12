@@ -116,7 +116,7 @@ document.onmousemove = function(event) {
             for (i = 0; i < 3; i++) {
                 if (i == j) continue;
                 if (sq(X - circles[i].x) + sq(Y - circles[i].y) <= sq(circles[i].r + circles[j].r)){
-                    a = (circles[i].r + circles[j].r)/Math.sqrt(sq(X - circles[i].x) + sq(Y-circles[i].y)) + 0.01;
+                    a = (circles[i].r + circles[j].r)/Math.sqrt(sq(X - circles[i].x) + sq(Y-circles[i].y)) + 0.001;
                     X = circles[i].x + (X - circles[i].x) * a;
                     Y = circles[i].y + (Y - circles[i].y) * a;
                     cnt++;
@@ -125,7 +125,7 @@ document.onmousemove = function(event) {
             for (i = 0; i < 3; i++) {
                 if (i == j) continue;
                 if (sq(X - circles[i].x) + sq(Y - circles[i].y) <= sq(circles[i].r + circles[j].r)){
-                    a = (circles[i].r + circles[j].r)/Math.sqrt(sq(X - circles[i].x) + sq(Y-circles[i].y)) + 0.01;
+                    a = (circles[i].r + circles[j].r)/Math.sqrt(sq(X - circles[i].x) + sq(Y-circles[i].y)) + 0.001;
                     X = circles[i].x + (X - circles[i].x) * a;
                     Y = circles[i].y + (Y - circles[i].y) * a;
                     cnt++;
