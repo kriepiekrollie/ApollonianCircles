@@ -51,6 +51,10 @@ function sq(value){
     return value * value;
 }
 
+function RandomRange(min, max){
+    return Math.floor(Math.random() * (max - min + 1) ) + min;
+}
+
 canvas = document.getElementById("cnvs");
 ctx = canvas.getContext("2d");
 function clear(){
@@ -71,6 +75,19 @@ radius_clicked = [false, false, false];
 dx = 0;
 dy = 0;
 
+intersects = true;
+while (intersects){
+    intersects = false;
+    for (i = 0; i < 3; i++) {
+        R = RandomRange(50,200);
+        circles[i] = {x:RandomRange(R,window.innerWidth-R),y:RandomRange(R,window.innerHeight-R),r:R};
+    }
+    for (j = 0; j < 2; j++)
+        for (i = j + 1; i < 3; i++)
+            if (sq(circles[j].x - circles[i].x) + sq(circles[j].y - circles[i].y) <= sq(circles[i].r + circles[j].r))
+                intersects = true;
+}
+
 function render(){
     clear();
     draw_circle(circles[0],4,'#ffffff');
@@ -83,6 +100,7 @@ function render(){
         draw_circle(apollonius(circles[0],circles[1],circles[2],s1,s2,s3),2,'#ffffff');
      }
 }
+render();
 
 document.onmouseup = function(event) {
     for (i = 0; i < 3; i++){
