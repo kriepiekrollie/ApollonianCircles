@@ -67,6 +67,7 @@ function draw_circle(circle,width,color){
 
 circles = [{x:300,y:300,r:200}, {x:800,y:300,r:100}, {x:500,y:500,r:60}];
 clicked = [false, false, false];
+radius_clicked = [false, false, false];
 dx = 0;
 dy = 0;
 
@@ -84,19 +85,25 @@ function render(){
 }
 
 document.onmouseup = function(event) {
-    for (i = 0; i < 3; i++)
+    for (i = 0; i < 3; i++){
         clicked[i] = false;
+        radius_clicked[i] = false;
+    }
 }
 
 document.onmousedown = function(event) {
     X = event.pageX;
     Y = event.pageY;
-    for (i = 0; i < 3; i++)
-        if (sq(circles[i].x-X) + sq(circles[i].y-Y) <= sq(circles[i].r)){
+    for (i = 0; i < 3; i++){
+        dist = sq(circles[i].x-X) + sq(circles[i].y-Y);
+        if (dist < sq(circles[i].r - 4)) {
             clicked[i] = true;
             dx = X - circles[i].x;
             dy = Y - circles[i].y;
+        } else if (dist < sq(circles[i].r + 4)) {
+            radius_clicked[i] = true;
         }
+    }
 }
 
 document.onmousemove = function(event) {
@@ -127,6 +134,13 @@ document.onmousemove = function(event) {
             if (cnt>1) continue;
             circles[j].x = X;
             circles[j].y = Y;   
+        }
+    }
+    for (j = 0; j < 3; j++) {
+        if (radius_clicked[j]){
+            X = event.pageX;
+            Y = event.pageY;
+            circles[j].r = Math.sqrt(sq(circles[j].x-X) + sq(circles[j].y-Y));
         }
     }
     render();
