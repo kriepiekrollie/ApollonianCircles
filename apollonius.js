@@ -140,7 +140,17 @@ document.onmousemove = function(event) {
         if (radius_clicked[j]){
             X = event.pageX;
             Y = event.pageY;
-            circles[j].r = Math.sqrt(sq(circles[j].x-X) + sq(circles[j].y-Y));
+            R = Math.sqrt(sq(circles[j].x-X) + sq(circles[j].y-Y))
+            intersects = false;
+            for (i = 0; i < 3; i++) {
+                if (i == j) continue;
+                if (sq(circles[j].x - circles[i].x) + sq(circles[j].y - circles[i].y) <= sq(circles[i].r + R)){
+                    intersects = true;
+                    break;
+                }
+            }
+            if (!intersects)
+                circles[j].r = R;
         }
     }
     render();
